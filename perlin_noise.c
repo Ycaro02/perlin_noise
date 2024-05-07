@@ -1,4 +1,3 @@
-#include "cglm/include/cglm/cglm.h"
 #include "perlin_noise.h"
 
 /**

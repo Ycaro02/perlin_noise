@@ -12,5 +12,9 @@ all: ${NAME}
 ${NAME}: 
 	gcc -o ${NAME} ${SRC} ${MLX_FLAG} libft/libft.a
 
+clean_lib:
+	make -C libft fclean
+	make -C minilibx-linux clean
+
 fclean :
 	rm -f ${NAME}
