@@ -13,7 +13,7 @@ u8 *perlinImageGet(int width, int height) {
     // Generate Perlin noise
     float **noise = noiseSample2D(width, height);
     // Convert Perlin noise to image
-    width *= 3;
+    width *= 3; // UGLY HACK
     u8 *image = malloc(width * height * sizeof(u8));
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
