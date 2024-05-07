@@ -6,13 +6,14 @@
 # include "minilibx-linux/mlx_int.h"
 
 
-#define WIDTH 800
+#define WIDTH 600
 #define HEIGHT 600
 
 u8 *perlinImageGet(int width, int height) {
     // Generate Perlin noise
     float **noise = noiseSample2D(width, height);
     // Convert Perlin noise to image
+    width *= 3;
     u8 *image = malloc(width * height * sizeof(u8));
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
@@ -32,6 +33,8 @@ u8 *perlinImageGet(int width, int height) {
 int main() {
     // Initialize GLFW
     ft_printf_fd(1, "Go\n");
-    init_mlx(WIDTH, HEIGHT);
+    u8 *image = perlinImageGet(WIDTH, HEIGHT);
+
+    init_mlx(WIDTH, HEIGHT, image);
     return 0;
 }

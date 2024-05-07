@@ -7,6 +7,8 @@ typedef struct s_mlxData {
 	void *win;
 	void *img;
 	char *dataAdrr;
+	u8	 *perlinData;
+	int	 w, h;
 } mlxContext;
 
 /* @brief Destroy windows/display */
@@ -32,23 +34,26 @@ int	key_hooks_press(int keycode, mlxContext *game)
 }
 
 /* @brief Draw board */
-// static void draw_board(mlxContext *game)
-// {
-// 	int color = 0;
+static int perlinNoiseDraw(void *data)
+{
+	mlxContext *mlx = data;
+	// int color = 0;
 
-// 	for (uint32_t y = 1; y < SCREEN_HEIGHT; ++y) {
-// 		for (uint32_t x = 1; x < (SCREEN_WIDTH - RIGHTBAND_WIDTH); ++x) {
-// 			uint32_t x_compute =  ((x / TILE_SIZE) % BOARD_W);
-// 			uint32_t y_compute = ((y / TILE_SIZE) * BOARD_W);   
-// 			uint32_t idx = x_compute + y_compute;
-// 			uint32_t tile_state = game->ipc->ptr[idx];
-// 			color = tile_state == TILE_EMPTY ? 0xFFFFFF : get_new_color(tile_state).color;
-// 			if (x % TILE_SIZE != 0 && y % TILE_SIZE != 0) {
-// 				((uint32_t *)game->img.data)[x + (y * (SCREEN_WIDTH - RIGHTBAND_WIDTH))] = color;
-// 			}
-// 		}
-// 	}
-// }
+	int i = 0;
+
+	for (int y = 0; y < mlx->h; ++y) {
+		for (int x = 0; x < mlx->w; ++x) {
+			((int *)mlx->dataAdrr)[y * mlx->w + x] = mlx->perlinData[i] << 16 | mlx->perlinData[i] << 8 | mlx->perlinData[i];
+			((int *)mlx->dataAdrr)[y * mlx->w + x] = mlx->perlinData[i] << 16 | mlx->perlinData[i+1] << 8 | mlx->perlinData[i+2];
+			// mlx->dataAdrr[(y * mlx->w + x) * 3] = mlx->perlinData[i];
+			// mlx->dataAdrr[(y * mlx->w + x) * 3 + 1] = mlx->perlinData[i + 1];
+			// mlx->dataAdrr[(y * mlx->w + x) * 3 + 2] = mlx->perlinData[i + 2];
+			// i++;
+			i+=3;
+		}
+	}
+	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, 0, 0);
+}
 
 
 	
@@ -56,13 +61,18 @@ int	key_hooks_press(int keycode, mlxContext *game)
 	// mlx_put_image_to_window(game->mlx, game->win, game->img.image, 0, 0);
 
 /* @brief Init display */
-int8_t init_mlx(int width, int height) 
+int8_t init_mlx(int width, int height, u8 *perlinData) 
 {
 	int8_t	packet_extract = 0; 
 	int		endian = 0;
 	mlxContext mlx = {};
 
+	mlx.perlinData = perlinData;
+	mlx.w = width;
+	mlx.h = height;
+	
 	mlx.ptr = mlx_init();
+
 	if (!mlx.ptr) {
 		ft_printf_fd(2, "mlx_init failed\n");
 		return (1);
@@ -86,7 +96,7 @@ int8_t init_mlx(int width, int height)
 	mlx_hook(mlx.win, 2, 1L, key_hooks_press, &mlx);
 	mlx_hook(mlx.win, DestroyNotify, StructureNotifyMask, destroy_windows, &mlx);
 	// mlx_loop_hook(game->mlx, display_board_stdout, game);
-	// mlx_loop_hook(game->mlx, main_display, game);
+	mlx_loop_hook(mlx.ptr, perlinNoiseDraw, &mlx);
 	mlx_loop(mlx.ptr);
 	return (0);
 

@@ -9,8 +9,10 @@ MLX_FLAG 		=	-Lminilibx-linux -lmlx -lX11 -lXext -lm
 
 all: ${NAME}
 
-${NAME}: 
-	gcc -o ${NAME} ${SRC} ${MLX_FLAG} libft/libft.a
+${NAME}:
+	make -C libft
+	make -C minilibx-linux
+	gcc -o ${NAME} ${SRC} ${MLX_FLAG} libft/libft.a -g
 
 clean_lib:
 	make -C libft fclean
