@@ -8,6 +8,7 @@ typedef struct s_mlxData {
 	void *img;
 	char *dataAdrr;
 	u8	 *perlinData;
+	u8	 **perlinPtr;
 	int	 w, h;
 } mlxContext;
 
@@ -18,6 +19,7 @@ int destroy_windows(mlxContext *mlx)
 	mlx_destroy_window(mlx->ptr, mlx->win);
 	mlx_destroy_display(mlx->ptr);
 	ft_printf_fd(1, "Mlx exit\n");	
+	free(*mlx->perlinPtr);
 	free(mlx->ptr);
 	// free(mlx);
 	exit(0);
@@ -54,7 +56,7 @@ static int perlinNoiseDraw(void *data)
 	// mlx_put_image_to_window(game->mlx, game->win, game->img.image, 0, 0);
 
 /* @brief Init display */
-int8_t init_mlx(int width, int height, u8 *perlinData) 
+int8_t init_mlx(int width, int height, u8 **perlinData) 
 {
 	int8_t	packet_extract = 0; 
 	int		endian = 0;
@@ -62,7 +64,8 @@ int8_t init_mlx(int width, int height, u8 *perlinData)
 
 
 	ft_bzero(&mlx, sizeof(mlx));
-	mlx.perlinData = perlinData;
+	mlx.perlinPtr = perlinData;
+	mlx.perlinData = *perlinData;
 	mlx.w = width;
 	mlx.h = height;
 	

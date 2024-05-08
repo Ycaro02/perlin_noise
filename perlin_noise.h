@@ -64,6 +64,6 @@ f32 perlinNoise(vec2_f32 **gradient, f32 x, f32 y);
 f32 **noiseSample2D(vec2_f32 **gradient, int width, int height, f32 frequency);
 
 
-int8_t init_mlx(int width, int height, u8 *perlinData);
+int8_t init_mlx(int width, int height, u8 **perlinData);
 
 #endif /* HEADER_PERLIN_NOISE_H */
