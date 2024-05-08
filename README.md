@@ -9,8 +9,8 @@ The program generates a 2D array of noise values using the Perlin Noise algorith
 
 
 
-## Input explanation: ./perlinDisplay <Seed> <octave> <persistence> <lacutarity>
-### Seed: 42, octave 8 , persistence 1.0, lacutarity 2.0
+## Input explanation: ./perlinDisplay |Seed| |octave| |persistence| |lacutarity|
+### First example: Seed: 42, octave 8 , persistence 1.0, lacutarity 2.0
 
 ## Example
 Here's an example of an image generated with this program:
