@@ -1,6 +1,0 @@
-{
-	"files.associations": {
-		"*.def": "source.def",
-		"perlin_noise.h": "c"
-	}
-}
