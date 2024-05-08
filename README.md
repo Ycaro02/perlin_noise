@@ -12,11 +12,23 @@ The program generates a 2D array of noise values using the Perlin Noise algorith
 ## Input explanation:
 ```bash 
 ./perlinDisplay <Seed> <Octave> <Persistence> <Lacutarity>
-Seed: The seed is a starting point used in generating the random pattern of Perlin Noise. It determines the initial configuration of the noise, and the same seed will produce the same pattern each time it's used. Changing the seed will result in a different pattern.
-Octave: Octaves are used in the generation of fractal Perlin Noise. Each octave represents a layer of noise, with higher octaves adding finer details to the overall noise pattern. By combining multiple octaves, you can create more complex and detailed noise patterns.
-Persistence: Persistence controls how quickly the amplitude of each successive octave diminishes. It determines the contribution of each octave to the overall noise. Higher persistence values result in more influence from higher octaves, leading to more detail in the generated noise.
-Lacunarity: Lacunarity determines the frequency multiplier between successive octaves. It controls the rate at which the frequency increases with each octave. Higher lacunarity values result in faster frequency increases between octaves, leading to more detailed and "zoomed-in" noise patterns.
 ```
+
+Seed: The seed is a starting point used in generating the random pattern of Perlin Noise.
+It determines the initial configuration of the noise, and the same seed will produce the same pattern each time it's used.
+Changing the seed will result in a different pattern.
+
+Octave: Octaves are used in the generation of fractal Perlin Noise. Each octave represents a layer of noise,
+with higher octaves adding finer details to the overall noise pattern. By combining multiple octaves,
+you can create more complex and detailed noise patterns.
+
+Persistence: Persistence controls how quickly the amplitude of each successive octave diminishes.
+It determines the contribution of each octave to the overall noise.
+Higher persistence values result in more influence from higher octaves, leading to more detail in the generated noise.
+
+Lacunarity: Lacunarity determines the frequency multiplier between successive octaves.
+It controls the rate at which the frequency increases with each octave.
+Higher lacunarity values result in faster frequency increases between octaves, leading to more detailed and "zoomed-in" noise patterns.
 
 ## Example
 Here's an example of an image generated with this program:
