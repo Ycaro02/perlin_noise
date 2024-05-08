@@ -24,6 +24,8 @@ vec2_f32 **gradientNoiseGeneration(int width, int height) {
 			noiseGradienCompute(randomGenerationGet(INT_MAX), randomGenerationGet(INT_MAX), noise[i][j]);
 		}
 	}
+
+
 	return (noise);
 }
 
@@ -50,10 +52,9 @@ f32 smoothStep(f32 w) {
  * @param w: Weight must be between 0 and 1
 */
 f32 interpolateValues(f32 a0, f32 a1, f32 w) {
-	// ft_printf_fd(1, "a0: %f, a1: %f, w: %f smoothW: %f\n", a0, a1, w, smoothStep(w));
-	// ft_printf_fd(1, "smoothStep(w): %f\n", smoothStep(w));
-	// ft_printf_fd(1, "a0 + (a1 - a0) * smoothStep(w): %f\n", a0 + (a1 - a0) * smoothStep(w));
 	return (a0 + (a1 - a0) * smoothStep(w));
+	// return (a1 - a0) * ((w * (w * 6.0 - 15.0) + 10.0) * w * w * w) + a0;
+
 }
 
 /**
@@ -80,10 +81,10 @@ f32 dotGridGradient(vec2_f32 **gradient, int ix, int iy, f32 x, f32 y) {
 */
 f32 perlinNoise(vec2_f32 **gradient, f32 x, f32 y) {
 	/* Determine grid cellule point */
-	s32 x0 = floor(x);
+	s32 x0 = (s32)floor(x);
 	s32 x1 = x0 + 1;
 
-	s32 y0 = floor(y);
+	s32 y0 = (s32)floor(y);
 	s32 y1 = y0 + 1;
 
 	/* Determine interpolation weights */
@@ -105,15 +106,15 @@ f32 perlinNoise(vec2_f32 **gradient, f32 x, f32 y) {
 	return (value);
 }
 
+
 /**
  * @brief Generate a 2D sample of Perlin noise
  * @param width: Width of the sample
  * @param height: Height of the sample
  * @return 2D sample of Perlin noise
 */
-f32 **noiseSample2D(int width, int height) {
+f32 **noiseSample2D(vec2_f32 **gradient, int width, int height) {
     // Generate the gradient noise
-    vec2_f32 **gradient = gradientNoiseGeneration(width, height);
 
     // Allocate memory for the sample
     f32 **sample = malloc(sizeof(f32 *) * height);
@@ -133,17 +134,7 @@ f32 **noiseSample2D(int width, int height) {
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
             sample[i][j] = perlinNoise(gradient, (f32)j / width, (f32)i / height);
-			// f32 fj = (f32)j + 0.500000;
-			// f32 fi = (f32)i + 0.500000;
-            // sample[i][j] = perlinNoise(gradient, fj, fi);
         }
     }
-
-    // Free the gradient noise
-    for (int i = 0; i < height; i++) {
-        free(gradient[i]);
-    }
-    free(gradient);
-
     return (sample);
 }

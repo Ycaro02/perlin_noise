@@ -37,19 +37,12 @@ int	key_hooks_press(int keycode, mlxContext *game)
 static int perlinNoiseDraw(void *data)
 {
 	mlxContext *mlx = data;
-	// int color = 0;
 
 	int i = 0;
-
 	for (int y = 0; y < mlx->h; ++y) {
 		for (int x = 0; x < mlx->w; ++x) {
 			((int *)mlx->dataAdrr)[y * mlx->w + x] = mlx->perlinData[i] << 16 | mlx->perlinData[i] << 8 | mlx->perlinData[i];
-			((int *)mlx->dataAdrr)[y * mlx->w + x] = mlx->perlinData[i] << 16 | mlx->perlinData[i+1] << 8 | mlx->perlinData[i+2];
-			// mlx->dataAdrr[(y * mlx->w + x) * 3] = mlx->perlinData[i];
-			// mlx->dataAdrr[(y * mlx->w + x) * 3 + 1] = mlx->perlinData[i + 1];
-			// mlx->dataAdrr[(y * mlx->w + x) * 3 + 2] = mlx->perlinData[i + 2];
-			// i++;
-			i+=3;
+			i++;
 		}
 	}
 	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, 0, 0);
@@ -65,8 +58,10 @@ int8_t init_mlx(int width, int height, u8 *perlinData)
 {
 	int8_t	packet_extract = 0; 
 	int		endian = 0;
-	mlxContext mlx = {};
+	mlxContext mlx;
 
+
+	ft_bzero(&mlx, sizeof(mlx));
 	mlx.perlinData = perlinData;
 	mlx.w = width;
 	mlx.h = height;
