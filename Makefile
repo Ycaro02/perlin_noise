@@ -18,5 +18,8 @@ clean_lib:
 	make -C libft fclean
 	make -C minilibx-linux clean
 
+test: all
+	./${NAME} 42 8 1.0 2.0
+
 fclean :
 	rm -f ${NAME}

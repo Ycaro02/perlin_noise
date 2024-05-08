@@ -113,7 +113,7 @@ f32 perlinNoise(vec2_f32 **gradient, f32 x, f32 y) {
  * @param height: Height of the sample
  * @return 2D sample of Perlin noise
 */
-f32 **noiseSample2D(vec2_f32 **gradient, int width, int height) {
+f32 **noiseSample2D(vec2_f32 **gradient, int width, int height, f32 frequency) {
     // Generate the gradient noise
 
     // Allocate memory for the sample
@@ -133,7 +133,9 @@ f32 **noiseSample2D(vec2_f32 **gradient, int width, int height) {
     // Fill the sample with Perlin noise
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
-            sample[i][j] = perlinNoise(gradient, (f32)j / width, (f32)i / height);
+			f32 x = (f32)j / (f32)width * frequency;
+			f32 y = (f32)i / (f32)height * frequency;
+            sample[i][j] = perlinNoise(gradient, x,y);
         }
     }
     return (sample);
