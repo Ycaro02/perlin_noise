@@ -1,6 +1,8 @@
-#include "perlin_noise.h"
-#include "minilibx-linux/mlx.h"
-#include "minilibx-linux/mlx_int.h"
+#include "../perlin_noise.h"
+#include "../minilibx-linux/mlx.h"
+#include "../minilibx-linux/mlx_int.h"
+
+#define ESC_KEY 65307
 
 typedef struct s_mlxData {
 	void *ptr;
@@ -18,19 +20,18 @@ int destroy_windows(mlxContext *mlx)
 	mlx_destroy_image(mlx->ptr, mlx->img);
 	mlx_destroy_window(mlx->ptr, mlx->win);
 	mlx_destroy_display(mlx->ptr);
-	ft_printf_fd(1, "Mlx exit\n");	
 	free(*mlx->perlinPtr);
 	free(mlx->ptr);
-	// free(mlx);
+	ft_printf_fd(1, "Mlx exit\n");	
 	exit(0);
 }
 
-#define ESC 65307
+
 
 /* @brief key press handler */
 int	key_hooks_press(int keycode, mlxContext *game)
 {
-	if (keycode == ESC)
+	if (keycode == ESC_KEY)
 		destroy_windows(game); /* maybe need to check sem value and lock it to detash mem */
 	return (0);
 }

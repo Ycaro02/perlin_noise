@@ -1,30 +1,35 @@
 NAME = perlinDisplay
 
-# Path: src/
-SRC = main_perlin.c \
-	  perlin_noise.c \
-		mlx_init.c \
+SRC = 	src/main_perlin.c \
+	  	src/perlin_noise.c \
+		src/noise_utils.c \
+		src/mlx_display_init.c \
+		src/noise_image.c \
 
 MLX_FLAG 		=	-Lminilibx-linux -lmlx -lX11 -lXext -lm
+
+MAKE_SILENCE = make -s -C
 
 all: ${NAME}
 
 ${NAME}:
-	make -s -C libft
-	make -s -C minilibx-linux
+	${MAKE_SILENCE} libft
+	${MAKE_SILENCE} minilibx-linux
 	gcc -o ${NAME} ${SRC} ${MLX_FLAG} libft/libft.a
 
 debug:
-	make -s -C libft
-	make -s -C minilibx-linux
+	${MAKE_SILENCE} libft
+	${MAKE_SILENCE} minilibx-linux
 	gcc -o ${NAME} ${SRC} ${MLX_FLAG} libft/libft.a -D PERLIN_NOISE_DEBUG -g
 
 clean_lib:
-	make -s -C libft fclean
-	make -s -C minilibx-linux clean
+	${MAKE_SILENCE} libft fclean
+	${MAKE_SILENCE} minilibx-linux clean
 
 test: all
 	./${NAME} 42 8 1.0 2.0
 
-fclean :
+clean:
 	rm -f ${NAME}
+
+fclean : clean_lib clean
