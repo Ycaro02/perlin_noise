@@ -9,7 +9,7 @@ The program generates a 2D array of noise values using the Perlin Noise algorith
 
 
 
-## Input explanation: ./perlinDisplay |Seed| |octave| |persistence| |lacutarity|
+## Input explanation: ./perlinDisplay Seed Octave Persistence Lacutarity
 ### First example: Seed: 42, octave 8 , persistence 1.0, lacutarity 2.0
 
 ## Example
