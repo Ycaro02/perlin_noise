@@ -1,13 +1,13 @@
 # Perlin Noise Image Generator
 
-This project uses Perlin Noise to generate unique, interesting images. Perlin Noise is a type of gradient noise developed by Ken Perlin in 1983. It's widely used in computer graphics for effects like fire, smoke, and clouds, and to simulate natural phenomena like the distribution of hairs on an animal or the shape of a mountain range.
+## Technology
+This project uses the C language and the MinilibX graphics library for Linux to generate images using Perlin noise. Perlin noise is a type of gradient noise developed by Ken Perlin in 1983. It is widely used in computer graphics for effects such as fire, smoke and clouds, as well as to simulate natural phenomena such as the distribution of hair on an animal or the shape of a mountain range.
+
 
 ## How it Works
-
 The program generates a 2D array of noise values using the Perlin Noise algorithm, then maps these values to a range of colors to create an image. The result is a smoothly varying, non-repeating image that can be used for textures, height maps for terrain generation, or any place where you need interesting random data.
 
 ## Example
-
 Here's an example of an image generated with this program:
 
 ## Input explanation:
