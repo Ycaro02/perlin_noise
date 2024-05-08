@@ -10,6 +10,20 @@ The program generates a 2D array of noise values using the Perlin Noise algorith
 
 Here's an example of an image generated with this program:
 
+#### Input ./perlinDisplay 42 8 1 2 
 ### Seed: 42, octave 8 , persistence 1.0, lacutarity 2.0
 
-![Example](screen/Noise_42_8_1_2.png)
+![Example1](screen/Noise_42_8_1_2.png)
+
+#### Input ./perlinDisplay 12345 8 1.0 2.0
+![Example2](screen/Noise_12345_8_1_2.png)
+
+#### Input ./perlinDisplay 42 1 1 2 (One octave)
+![Example3](Noise_42_1_1_2.png)
+
+#### Input ./perlinDisplay 42 4 1 2 
+![Example4](Noise_42_4_1_2.png)
+
+#### Input ./perlinDisplay 42 8 2 2 
+![Example5](screen/Noise_42_8_2_2.png)
+
