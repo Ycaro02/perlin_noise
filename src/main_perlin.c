@@ -12,7 +12,7 @@ s8 parseInput(int argc, char **argv, u64 *seed, int *octaves, f32 *persistence, 
 	if (*octaves < 1 || *octaves > 8) {
 		ft_printf_fd(1, "octaves must be between 1 and 8\n");
 		return (1);
-	} else if (*persistence < 1.0 || *persistence > 2.0) {
+	} else if (*persistence < 0.3 || *persistence > 2.0) {
 		ft_printf_fd(1, "persistence must be between 1.0 and 2.0\n");
 		return (1);
 	} else if (*lacurarity < 1.0 || *lacurarity > 3.0) {
