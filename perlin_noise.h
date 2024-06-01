@@ -117,6 +117,6 @@ void debugTotalUpdate(f32 total, f32 *totalMin, f32 *totalMax);
 f32 **floatDoubleArrayAlloc(int rows, int cols);
 
 /* mlx init for display */
-int8_t init_mlx(int width, int height, u8 **perlinData);
+int8_t init_mlx(int width, int height, u8 **perlinData, u8 colorDisplay);
 
 #endif /* HEADER_PERLIN_NOISE_H */

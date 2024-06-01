@@ -5,13 +5,14 @@
 #define ESC_KEY 65307
 
 typedef struct s_mlxData {
-	void *ptr;
-	void *win;
-	void *img;
-	char *dataAdrr;
-	u8	 *perlinData;
-	u8	 **perlinPtr;
-	int	 w, h;
+	void 	*ptr;
+	void 	*win;
+	void 	*img;
+	char 	*dataAdrr;
+	int	 	w, h;
+	u8	 	*perlinData;
+	u8	 	**perlinPtr;
+	u8		colorDisplay;
 } mlxContext;
 
 /* @brief Destroy windows/display */
@@ -44,7 +45,18 @@ static int perlinNoiseDraw(void *data)
 	int i = 0;
 	for (int y = 0; y < mlx->h; ++y) {
 		for (int x = 0; x < mlx->w; ++x) {
-			((int *)mlx->dataAdrr)[y * mlx->w + x] = mlx->perlinData[i] << 16 | mlx->perlinData[i] << 8 | mlx->perlinData[i];
+			if (!mlx->colorDisplay) { /* black and white display */
+				int color = mlx->perlinData[i] << 16 | mlx->perlinData[i] << 8 | mlx->perlinData[i];
+				((int *)mlx->dataAdrr)[y * mlx->w + x] = color;
+			} else { /* color display RGB */
+				if (mlx->perlinData[i] <= 255 && mlx->perlinData[i] >= 150) {
+					((int *)mlx->dataAdrr)[y * mlx->w + x] = 0xff0000;
+				} else if (mlx->perlinData[i] >= 100 && mlx->perlinData[i] <= 150) {
+					((int *)mlx->dataAdrr)[y * mlx->w + x] = 0x0000ff;
+				} else {
+					((int *)mlx->dataAdrr)[y * mlx->w + x] = 0x00ff00;
+				}
+			}
 			i++;
 		}
 	}
@@ -57,7 +69,7 @@ static int perlinNoiseDraw(void *data)
 	// mlx_put_image_to_window(game->mlx, game->win, game->img.image, 0, 0);
 
 /* @brief Init display */
-int8_t init_mlx(int width, int height, u8 **perlinData) 
+int8_t init_mlx(int width, int height, u8 **perlinData, u8 colorDisplay) 
 {
 	int8_t	packet_extract = 0; 
 	int		endian = 0;
@@ -70,6 +82,8 @@ int8_t init_mlx(int width, int height, u8 **perlinData)
 	mlx.w = width;
 	mlx.h = height;
 	
+	mlx.colorDisplay = colorDisplay;
+
 	mlx.ptr = mlx_init();
 
 	if (!mlx.ptr) {
