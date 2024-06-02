@@ -34,3 +34,4 @@ clean:
 	rm -f ${NAME}
 
 fclean : clean_lib clean
+	@echo fclean done

@@ -53,3 +53,26 @@ f32 normaliseNoiseGet(f32 **perlinNoise, s32 x, s32 z, PerlinData *perlinVal) {
 	// return (getInterpolatedPerlinNoise(perlinNoise, x, z, 8.0f, PERLIN_NOISE_WIDTH, PERLIN_NOISE_HEIGHT, perlinVal));
 	return (getInterpolatedPerlinNoise(perlinNoise, x, z, 4.0f, PERLIN_NOISE_WIDTH, PERLIN_NOISE_HEIGHT, perlinVal));
 }
+
+f32 normalizeU8Tof32(u8 value, u8 start1, u8 stop1, f32 start2, f32 stop2) {
+    return start2 + (stop2 - start2) * ((value - start1) / (f32)(stop1 - start1));
+}
+
+f32 **array1DTo2D(u8 *array, u32 height, u32 width) {
+	f32 **perlin2D = ft_calloc(height, sizeof(f32 *));
+	for (u32 i = 0; i < height; ++i) {
+		perlin2D[i] = ft_calloc(width, sizeof(f32));
+		for (u32 j = 0; j < width; ++j) {
+			perlin2D[i][j] = normalizeU8Tof32(array[i * width + j], 0, 255, -1.0f, 1.0f);
+		}
+	}
+	return (perlin2D);
+}
+
+f32 **perlin2DFloatGet(u8 *perlin1D) {
+	f32 **perlin2D = NULL;
+	/* Transform 1D array to 2D array */
+	perlin2D = array1DTo2D(perlin1D, PERLIN_NOISE_HEIGHT, PERLIN_NOISE_WIDTH);
+	free(perlin1D);
+	return (perlin2D);
+}
