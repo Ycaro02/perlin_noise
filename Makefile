@@ -36,5 +36,7 @@ ftest: all
 clean:
 	rm -f ${NAME}
 
+re : clean all
+
 fclean : clean_lib clean
 	@echo fclean done

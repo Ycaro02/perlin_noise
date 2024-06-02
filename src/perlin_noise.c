@@ -76,6 +76,9 @@ f32 dotGridGradient(vec2_f32 **gradient, int ix, int iy, f32 x, f32 y) {
 	f32 dx = x - (f32)ix;
 	f32 dy = y - (f32)iy;
 
+	if (iy >= PERLIN_NOISE_HEIGHT) { iy = iy % PERLIN_NOISE_HEIGHT;}
+	if (ix >= PERLIN_NOISE_WIDTH) { ix = ix % PERLIN_NOISE_WIDTH;}
+
 	/* Return  dot product */
 	return ((dx * gradient[iy][ix][0]) + (dy * gradient[iy][ix][1]));
 }
