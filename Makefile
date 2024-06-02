@@ -30,6 +30,9 @@ clean_lib:
 test: all
 	./${NAME} 42 8 1.0 2.0
 
+ftest: all
+	./${NAME} 42 4 1.0 2.0 1
+
 clean:
 	rm -f ${NAME}
 

@@ -48,6 +48,7 @@ int	key_hooks_press(int keycode, mlxContext *game)
 }
 
 
+/* @brief Draw black and white board */
 static int perlinNoiseDraw(void *data) {
 	mlxContext *mlx = data;
 
@@ -59,21 +60,17 @@ static int perlinNoiseDraw(void *data) {
 	}
 	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, 0, 0);
 }
-// if (!mlx->colorDisplay) { /* black and white display */
-// 	int color = (int)mlx->perlinFloatData[i] << 16 | (int)mlx->perlinFloatData[i] << 8 | (int)mlx->perlinFloatData[i];
-// 	((int *)mlx->dataAdrr)[y * mlx->w + x] = color;
-// }
 
-/* @brief Draw board */
+/* @brief Draw Color board */
 static int perlinNoiseColorDraw(void *data)
 {
 	mlxContext *mlx = data;
 
 	for (int y = 0; y < mlx->h; ++y) {
 		for (int x = 0; x < mlx->w; ++x) {
-			if (mlx->perlinFloatData[y][x] <= 1.0f && mlx->perlinFloatData[y][x] >= 0.5f) {
+			if (mlx->perlinFloatData[y][x] >= 0.4f) {
 				((int *)mlx->dataAdrr)[y * mlx->w + x] = 0xff0000;
-			} else if (mlx->perlinFloatData[y][x] >= -0.5f && mlx->perlinFloatData[y][x] <= 0.5f) {
+			} else if (mlx->perlinFloatData[y][x] <= 0.0f) {
 				((int *)mlx->dataAdrr)[y * mlx->w + x] = 0x0000ff;
 			} else {
 				((int *)mlx->dataAdrr)[y * mlx->w + x] = 0x00ff00;
@@ -83,18 +80,11 @@ static int perlinNoiseColorDraw(void *data)
 	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, 0, 0);
 }
 
-
-	
-	/* Display image (flush) */
-	// mlx_put_image_to_window(game->mlx, game->win, game->img.image, 0, 0);
-
 /* @brief Init display */
 int8_t init_mlx(int width, int height, void *perlinData, u8 colorDisplay) 
 {
-	int8_t	packet_extract = 0; 
-	int		endian = 0;
 	mlxContext mlx;
-
+	int endian = 0;
 
 	ft_bzero(&mlx, sizeof(mlx));
 	if (colorDisplay) {
@@ -108,7 +98,6 @@ int8_t init_mlx(int width, int height, void *perlinData, u8 colorDisplay)
 	}
 	mlx.w = width;
 	mlx.h = height;
-	
 	mlx.colorDisplay = colorDisplay;
 
 	mlx.ptr = mlx_init();
