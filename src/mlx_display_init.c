@@ -61,6 +61,17 @@ static int perlinNoiseDraw(void *data) {
 	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, 0, 0);
 }
 
+#define RGB_RED 0xff0000
+#define RGB_GREEN 0x00ff00
+#define RGB_BLUE 0x0000ff
+
+#define BLACK 0x000000
+#define DARK_GRAY 0x808080
+#define GRAY 0xA0A0A0
+#define LIGHT_GRAY 0xC0C0C0
+#define VERRY_LIGHT_GRAY 0xE0E0E0
+
+
 /* @brief Draw Color board */
 static int perlinNoiseColorDraw(void *data)
 {
@@ -68,12 +79,17 @@ static int perlinNoiseColorDraw(void *data)
 
 	for (int y = 0; y < mlx->h; ++y) {
 		for (int x = 0; x < mlx->w; ++x) {
-			if (mlx->perlinFloatData[y][x] >= 0.4f) {
-				((int *)mlx->dataAdrr)[y * mlx->w + x] = 0xff0000;
-			} else if (mlx->perlinFloatData[y][x] <= 0.0f) {
-				((int *)mlx->dataAdrr)[y * mlx->w + x] = 0x0000ff;
+			f32 val = mlx->perlinFloatData[y][x];
+			if (val >= 0.2f) {
+				((int *)mlx->dataAdrr)[y * mlx->w + x] = BLACK;
+			} else if (val >= 0.0 && val <= 0.2f) {
+				((int *)mlx->dataAdrr)[y * mlx->w + x] = DARK_GRAY;
+			} else if (val >= -0.2 && val <= 0.0f) {
+				((int *)mlx->dataAdrr)[y * mlx->w + x] = GRAY;
+			} else if (val >= -0.5 && val <= 0.2f) {
+				((int *)mlx->dataAdrr)[y * mlx->w + x] = LIGHT_GRAY;
 			} else {
-				((int *)mlx->dataAdrr)[y * mlx->w + x] = 0x00ff00;
+				((int *)mlx->dataAdrr)[y * mlx->w + x] = VERRY_LIGHT_GRAY;
 			}
 		}
 	}

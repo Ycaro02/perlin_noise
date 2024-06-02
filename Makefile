@@ -7,7 +7,7 @@ SRC =	src/main_perlin.c\
 		src/noise_utils.c\
 		src/perlin_noise.c\
 
-MLX_FLAG 		=	-Lminilibx-linux -lmlx -lX11 -lXext -lm -fsanitize=address
+MLX_FLAG 		=	-Lminilibx-linux -lmlx -lX11 -lXext -lm -fsanitize=address -g
 
 MAKE_SILENCE = make -s -C
 

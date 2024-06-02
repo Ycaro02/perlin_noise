@@ -15,8 +15,8 @@ s8 parseInput(int argc, char **argv, u64 *seed, int *octaves, f32 *persistence, 
 	} else if (*persistence < 0.3 || *persistence > 2.0) {
 		ft_printf_fd(1, "persistence must be between 1.0 and 2.0\n");
 		return (1);
-	} else if (*lacurarity < 1.0 || *lacurarity > 3.0) {
-		ft_printf_fd(1, "lacurarity must be between 1.0 and 3.0\n");
+	} else if (*lacurarity < 1.0 || *lacurarity > 2.5) {
+		ft_printf_fd(1, "lacurarity must be between 1.0 and 2.5\n");
 		return (1);
 	}
 	if (argc == 6) {
