@@ -66,6 +66,7 @@ static int perlinNoiseDraw(void *data) {
 #define RGB_BLUE 0x0000ff
 
 #define BLACK 0x000000
+#define VERRY_DARK_GRAY 0x404040
 #define DARK_GRAY 0x808080
 #define GRAY 0xA0A0A0
 #define LIGHT_GRAY 0xC0C0C0
@@ -80,8 +81,10 @@ static int perlinNoiseColorDraw(void *data)
 	for (int y = 0; y < mlx->h; ++y) {
 		for (int x = 0; x < mlx->w; ++x) {
 			f32 val = mlx->perlinFloatData[y][x];
-			if (val >= 0.2f) {
+			if (val >= 0.5f) {
 				((int *)mlx->dataAdrr)[y * mlx->w + x] = BLACK;
+			} else if (val >= 0.2 && val <= 0.5f) {
+				((int *)mlx->dataAdrr)[y * mlx->w + x] = VERRY_DARK_GRAY;
 			} else if (val >= 0.0 && val <= 0.2f) {
 				((int *)mlx->dataAdrr)[y * mlx->w + x] = DARK_GRAY;
 			} else if (val >= -0.2 && val <= 0.0f) {
