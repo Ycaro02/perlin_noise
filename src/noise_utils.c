@@ -1,6 +1,5 @@
 #include "../perlin_noise.h"
 
-
 void minMaxNoiseGet(f32 **noise, f32 *min, f32 *max, int h, int w) {
     for (int i = 0; i < h; i++) {
         for (int j = 0; j < w; j++) {

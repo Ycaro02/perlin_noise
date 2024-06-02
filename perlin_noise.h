@@ -5,7 +5,19 @@
 #define PERLIN_NOISE_HEIGHT 1024
 #define PERLIN_NOISE_WIDTH 1024
 
+#define PERLIN_ARRAY_SIZE (PERLIN_NOISE_HEIGHT * PERLIN_NOISE_WIDTH)
+
 #include "libft/libft.h"
+
+typedef struct s_perlin_data {
+	s32 z0, x0;
+	f32 val;
+	f32 add;
+	s32 normalise;
+	s32 givenX, givenZ;
+} PerlinData;
+
+int8_t init_mlx(int width, int height, u8 **perlinData, u8 colorDisplay);
 
 /**
  * @brief Initialize the random generation with a seed
@@ -19,7 +31,7 @@ FT_INLINE void randomGenerationInit(unsigned int seed) {
 /**
  * @brief Get a random number between -max/2 and PERLIN_NOISE_HEIGHT
 */
-FT_INLINE int randomGenerationGet(int max) {
+FT_INLINE int randomGenerationGet() {
     f32 range = 1.0;
     f32 res = (f32)rand() / (f32)RAND_MAX * 2.0 * range - range;
 	res *= 10000;
@@ -29,8 +41,10 @@ FT_INLINE int randomGenerationGet(int max) {
 /**
  * noise_image.c *
 */
-u8 *perlinImageGet(int width, int height, int octaves, f32 persistence, f32 lacurarity);
+u8 *perlinImageGet(unsigned int seed, int width, int height, int octaves, f32 persistence, f32 lacurarity);
 
+/* To call after seed generated */
+u8 *perlinImageGetWithoutSeed(int width, int height, int octaves, f32 persistence, f32 lacurarity);
 
 /**
  * perlin_noise.c *
@@ -116,7 +130,13 @@ void debugTotalUpdate(f32 total, f32 *totalMin, f32 *totalMax);
 */
 f32 **floatDoubleArrayAlloc(int rows, int cols);
 
+f32 normalisef32Tof32(f32 value, f32 start1, f32 stop1, f32 start2, f32 stop2);
+f32 perlinInterpolate(f32 a, f32 b, f32 t);
+f32 bilinearInterpolation(f32 q11, f32 q12, f32 q21, f32 q22, f32 x, f32 z);
+f32 getInterpolatedPerlinNoise(f32 **perlinNoise, f32 x, f32 z, f32 scale, s32 width, s32 height, PerlinData *perlinVal);
+f32 normaliseNoiseGet(f32 **perlinNoise, s32 x, s32 z, PerlinData *perlinVal);
+
 /* mlx init for display */
-int8_t init_mlx(int width, int height, u8 **perlinData, u8 colorDisplay);
+//int8_t init_mlx(int width, int height, u8 **perlinData);
 
 #endif /* HEADER_PERLIN_NOISE_H */

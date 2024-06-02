@@ -1,10 +1,11 @@
 NAME = perlinDisplay
 
-SRC = 	src/main_perlin.c \
-	  	src/perlin_noise.c \
-		src/noise_utils.c \
-		src/mlx_display_init.c \
-		src/noise_image.c \
+SRC =	src/main_perlin.c\
+		src/mlx_display_init.c\
+		src/noise_image.c\
+		src/noise_interpolate_utils.c\
+		src/noise_utils.c\
+		src/perlin_noise.c\
 
 MLX_FLAG 		=	-Lminilibx-linux -lmlx -lX11 -lXext -lm
 

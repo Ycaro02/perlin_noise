@@ -1,6 +1,6 @@
 #include "../perlin_noise.h"
 
-u8 *perlinImageGet(int width, int height, int octaves, f32 persistence, f32 lacurarity) {
+u8 *perlinImageInit(int width, int height, int octaves, f32 persistence, f32 lacurarity) {
     vec2_f32 **gradient = gradientNoiseGeneration(width, height);
     u8 *image = ft_calloc(width * height, sizeof(u8));
     f32 min = 1.0f, max = -1.0f;
@@ -41,3 +41,17 @@ u8 *perlinImageGet(int width, int height, int octaves, f32 persistence, f32 lacu
     return (image);
 }
 
+u8 *perlinImageGet(unsigned int seed, int width, int height, int octaves, f32 persistence, f32 lacurarity) {
+    u8 *perlinMap = NULL;
+
+    randomGenerationInit(seed);
+    perlinMap = perlinImageInit(width, height, octaves, persistence, lacurarity);
+    return (perlinMap);
+}
+
+u8 *perlinImageGetWithoutSeed(int width, int height, int octaves, f32 persistence, f32 lacurarity) {
+    u8 *perlinMap = NULL;
+
+    perlinMap = perlinImageInit(width, height, octaves, persistence, lacurarity);
+    return (perlinMap);
+}

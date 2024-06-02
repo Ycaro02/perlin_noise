@@ -31,7 +31,7 @@ vec2_f32 **gradientNoiseGeneration(int width, int height) {
 			return (NULL);
 		}
 		for (int j = 0; j < width; j++) {
-			noiseGradienCompute(randomGenerationGet(INT_MAX), randomGenerationGet(INT_MAX), noise[i][j]);
+			noiseGradienCompute(randomGenerationGet(), randomGenerationGet(), noise[i][j]);
 		}
 	}
 	return (noise);

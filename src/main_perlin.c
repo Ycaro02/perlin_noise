@@ -35,8 +35,8 @@ int main(int argc, char **argv) {
 	if (parseInput(argc, argv, &seed, &octaves, &persistence, &lacurarity, &colorDisplay)) {
 		return (1);
 	}
-    randomGenerationInit(seed);
-    u8 *image = perlinImageGet(PERLIN_NOISE_WIDTH, PERLIN_NOISE_HEIGHT, octaves, persistence, lacurarity);
+    // randomGenerationInit(seed);
+    u8 *image = perlinImageGet(seed, PERLIN_NOISE_WIDTH, PERLIN_NOISE_HEIGHT, octaves, persistence, lacurarity);
     if (!image) {
 		ft_printf_fd(1, "Error: perlinImageGet return NULL\n");
 		return (1);
