@@ -17,7 +17,7 @@ typedef struct s_perlin_data {
 	s32 givenX, givenZ;
 } PerlinData;
 
-int8_t init_mlx(int width, int height, u8 **perlinData, u8 colorDisplay);
+int8_t init_mlx(int width, int height, void *perlinData, u8 colorDisplay);
 
 /**
  * @brief Initialize the random generation with a seed

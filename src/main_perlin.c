@@ -30,6 +30,7 @@ int main(int argc, char **argv) {
 	u64 seed;
 	int octaves;
 	f32 persistence, lacurarity;
+	f32 **perlinNoise = NULL;
 	u8 colorDisplay = 0;
 
 	if (parseInput(argc, argv, &seed, &octaves, &persistence, &lacurarity, &colorDisplay)) {
@@ -41,6 +42,12 @@ int main(int argc, char **argv) {
 		ft_printf_fd(1, "Error: perlinImageGet return NULL\n");
 		return (1);
 	}
-	init_mlx(PERLIN_NOISE_WIDTH, PERLIN_NOISE_HEIGHT, &image, colorDisplay);
+	if (colorDisplay) {
+		perlinNoise = perlin2DFloatGet(image);
+		init_mlx(PERLIN_NOISE_WIDTH, PERLIN_NOISE_HEIGHT, (void *)&perlinNoise, colorDisplay);
+	} else {
+		init_mlx(PERLIN_NOISE_WIDTH, PERLIN_NOISE_HEIGHT, (void *)&image, colorDisplay);
+	}
+
     return (0);
 }

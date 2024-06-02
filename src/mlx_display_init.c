@@ -10,8 +10,10 @@ typedef struct s_mlxData {
 	void 	*img;
 	char 	*dataAdrr;
 	int	 	w, h;
-	u8	 	*perlinData;
-	u8	 	**perlinPtr;
+	f32	 	**perlinFloatData;
+	f32	 	***perlinFloatPtr;
+	u8		*perlinU8Data;
+	u8		**perlinU8Ptr;
 	u8		colorDisplay;
 } mlxContext;
 
@@ -21,7 +23,15 @@ int destroy_windows(mlxContext *mlx)
 	mlx_destroy_image(mlx->ptr, mlx->img);
 	mlx_destroy_window(mlx->ptr, mlx->win);
 	mlx_destroy_display(mlx->ptr);
-	free(*mlx->perlinPtr);
+
+	if (mlx->colorDisplay) {
+		for (int i = 0; i < mlx->h; ++i) {
+			free((mlx->perlinFloatData)[i]);
+		}
+		free(*mlx->perlinFloatPtr);
+	} else {
+		free(*mlx->perlinU8Ptr);
+	}
 	free(mlx->ptr);
 	ft_printf_fd(1, "Mlx exit\n");	
 	exit(0);
@@ -37,27 +47,37 @@ int	key_hooks_press(int keycode, mlxContext *game)
 	return (0);
 }
 
+
+static int perlinNoiseDraw(void *data) {
+	mlxContext *mlx = data;
+
+	for (int y = 0; y < mlx->h; ++y) {
+		for (int x = 0; x < mlx->w; ++x) {
+			int color = (int)mlx->perlinU8Data[y * mlx->w + x] << 16 | (int)mlx->perlinU8Data[y * mlx->w + x] << 8 | (int)mlx->perlinU8Data[y * mlx->w + x];
+			((int *)mlx->dataAdrr)[y * mlx->w + x] = color;
+		}
+	}
+	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, 0, 0);
+}
+// if (!mlx->colorDisplay) { /* black and white display */
+// 	int color = (int)mlx->perlinFloatData[i] << 16 | (int)mlx->perlinFloatData[i] << 8 | (int)mlx->perlinFloatData[i];
+// 	((int *)mlx->dataAdrr)[y * mlx->w + x] = color;
+// }
+
 /* @brief Draw board */
-static int perlinNoiseDraw(void *data)
+static int perlinNoiseColorDraw(void *data)
 {
 	mlxContext *mlx = data;
 
-	int i = 0;
 	for (int y = 0; y < mlx->h; ++y) {
 		for (int x = 0; x < mlx->w; ++x) {
-			if (!mlx->colorDisplay) { /* black and white display */
-				int color = mlx->perlinData[i] << 16 | mlx->perlinData[i] << 8 | mlx->perlinData[i];
-				((int *)mlx->dataAdrr)[y * mlx->w + x] = color;
-			} else { /* color display RGB */
-				if (mlx->perlinData[i] <= 255 && mlx->perlinData[i] >= 150) {
-					((int *)mlx->dataAdrr)[y * mlx->w + x] = 0xff0000;
-				} else if (mlx->perlinData[i] >= 100 && mlx->perlinData[i] <= 150) {
-					((int *)mlx->dataAdrr)[y * mlx->w + x] = 0x0000ff;
-				} else {
-					((int *)mlx->dataAdrr)[y * mlx->w + x] = 0x00ff00;
-				}
+			if (mlx->perlinFloatData[y][x] <= 1.0f && mlx->perlinFloatData[y][x] >= 0.5f) {
+				((int *)mlx->dataAdrr)[y * mlx->w + x] = 0xff0000;
+			} else if (mlx->perlinFloatData[y][x] >= -0.5f && mlx->perlinFloatData[y][x] <= 0.5f) {
+				((int *)mlx->dataAdrr)[y * mlx->w + x] = 0x0000ff;
+			} else {
+				((int *)mlx->dataAdrr)[y * mlx->w + x] = 0x00ff00;
 			}
-			i++;
 		}
 	}
 	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, 0, 0);
@@ -69,7 +89,7 @@ static int perlinNoiseDraw(void *data)
 	// mlx_put_image_to_window(game->mlx, game->win, game->img.image, 0, 0);
 
 /* @brief Init display */
-int8_t init_mlx(int width, int height, u8 **perlinData, u8 colorDisplay) 
+int8_t init_mlx(int width, int height, void *perlinData, u8 colorDisplay) 
 {
 	int8_t	packet_extract = 0; 
 	int		endian = 0;
@@ -77,8 +97,15 @@ int8_t init_mlx(int width, int height, u8 **perlinData, u8 colorDisplay)
 
 
 	ft_bzero(&mlx, sizeof(mlx));
-	mlx.perlinPtr = perlinData;
-	mlx.perlinData = *perlinData;
+	if (colorDisplay) {
+		ft_printf_fd(1, "Color display enable : float data\n");
+		mlx.perlinFloatPtr = (f32 ***)perlinData;
+		mlx.perlinFloatData = *(f32 ***)perlinData;
+	} else {
+		ft_printf_fd(1, "Black and white display enable : u8 data\n");
+		mlx.perlinU8Ptr = (u8 **)perlinData;
+		mlx.perlinU8Data = *(u8 **)perlinData;
+	}
 	mlx.w = width;
 	mlx.h = height;
 	
@@ -109,7 +136,12 @@ int8_t init_mlx(int width, int height, u8 **perlinData, u8 colorDisplay)
 	mlx_hook(mlx.win, 2, 1L, key_hooks_press, &mlx);
 	mlx_hook(mlx.win, DestroyNotify, StructureNotifyMask, destroy_windows, &mlx);
 	// mlx_loop_hook(game->mlx, display_board_stdout, game);
-	mlx_loop_hook(mlx.ptr, perlinNoiseDraw, &mlx);
+	if (colorDisplay) {
+		mlx_loop_hook(mlx.ptr, perlinNoiseColorDraw, &mlx);
+	} else {
+		mlx_loop_hook(mlx.ptr, perlinNoiseDraw, &mlx);
+	}
+	// mlx_loop_hook(mlx.ptr, perlinNoiseColorDraw, &mlx);
 	mlx_loop(mlx.ptr);
 	return (0);
 
