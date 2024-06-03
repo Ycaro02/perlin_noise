@@ -2,15 +2,16 @@
 #define HEADER_PERLIN_NOISE_H
 
 /* Height and width used for perlin noise generation */
-#define PERLIN_NOISE_HEIGHT 1024
-#define PERLIN_NOISE_WIDTH 1024
+
+#define PERLIN_NOISE_HEIGHT 2048
+#define PERLIN_NOISE_WIDTH 2048
 
 #define PERLIN_ARRAY_SIZE (PERLIN_NOISE_HEIGHT * PERLIN_NOISE_WIDTH)
 
 #include "libft/libft.h"
 
 typedef struct s_perlin_data {
-	s32 z0, x0;
+	s32 z0, x0, z1, x1;
 	f32 val;
 	f32 add;
 	s32 normalise;

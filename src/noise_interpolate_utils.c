@@ -23,17 +23,24 @@ f32 getInterpolatedPerlinNoise(f32 **perlinNoise, f32 x, f32 z, f32 scale, s32 w
     s32 z0 = scaledZ;
     s32 z1 = z0 + 1;
 
-    if (x1 >= width) x1 = x0;
-    if (z1 >= height) z1 = z0;
 
 	/* set Perlin Debug val here */
-	perlinVal->x0 = x0;
-	perlinVal->z0 = z0;
+	perlinVal->x0 = x0 % width;
+	perlinVal->z0 = z0 % height;
 
-    f32 q11 = perlinNoise[x0 % width][z0 % height];
-    f32 q12 = perlinNoise[x0 % width][z1 % height];
-    f32 q21 = perlinNoise[x1 % width][z0 % height];
-    f32 q22 = perlinNoise[x1 % width][z1 % height];
+    // if (x1 >= width) x1 = abs(perlinVal->x0 -1);
+    // if (z1 >= height) z1 = abs(perlinVal->x0 - 1);
+
+	perlinVal->x1 = x1 % width;
+	perlinVal->z1 = z1 % height;
+
+	
+
+	/* Maybe we need to interpolate value between the end of the start of the array to be more coherent when we 'reset' the idx */
+    f32 q11 = perlinNoise[perlinVal->x0][perlinVal->z0];
+    f32 q12 = perlinNoise[perlinVal->x0][perlinVal->z1];
+    f32 q21 = perlinNoise[perlinVal->x1][perlinVal->z0];
+    f32 q22 = perlinNoise[perlinVal->x1][perlinVal->z1];
 
     f32 tx = scaledX - x0;
     f32 tz = scaledZ - z0;
@@ -50,7 +57,7 @@ f32 normaliseNoiseGet(f32 **perlinNoise, s32 x, s32 z, PerlinData *perlinVal) {
 	perlinVal->givenZ = z;
 
 	// return (perlinNoise[normX][normZ]);
-	// return (getInterpolatedPerlinNoise(perlinNoise, x, z, 8.0f, PERLIN_NOISE_WIDTH, PERLIN_NOISE_HEIGHT, perlinVal));
+	// return (getInterpolatedPerlinNoise(perlinNoise, x, z, 2.0f, PERLIN_NOISE_WIDTH, PERLIN_NOISE_HEIGHT, perlinVal));
 	return (getInterpolatedPerlinNoise(perlinNoise, x, z, 4.0f, PERLIN_NOISE_WIDTH, PERLIN_NOISE_HEIGHT, perlinVal));
 }
 
