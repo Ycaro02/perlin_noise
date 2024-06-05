@@ -20,7 +20,7 @@ s8 parseInput(int argc, char **argv, u64 *seed, int *octaves, f32 *persistence, 
 		return (1);
 	}
 	if (argc == 6) {
-		*colorDisplay = 1U;
+		*colorDisplay = ft_atoi(argv[5]);
 	}
     ft_printf_fd(1, ORANGE"seed: %u\n"RESET, *seed);
 	return (0);
