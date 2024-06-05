@@ -103,19 +103,7 @@ void morphologicalErosion(u8 **snakeData, int w, int h, u8 valTocheck, u8 valToS
 	}
 }
 
-u8 **perlinToSnakeData(f32 **perlinData, int w, int h) {
-    float threshold = 0.02f; // Adjust this value to control the sensitivity of the edge detection
-	u8 **snakeData = ft_calloc(h, sizeof(u8*));
-	if (!snakeData) {
-		ft_printf_fd(2, "Error: ft_calloc failed\n");
-		return (NULL);
-	}
-	for (int i = 0; i < h; ++i) {
-		if (!(snakeData[i] = ft_calloc(w, sizeof(u8)))) {
-			ft_printf_fd(2, "Error: ft_calloc failed\n");
-			return (NULL);
-		}
-	}
+void neighborDiffEdgeDetection(f32 **perlinData, u8 **snakeData, int w, int h, f32 threshold) {
 	for (int y = 1; y < h - 1; ++y) {
 		for (int x = 1; x < w - 1; ++x) {
 			// Calculate the difference in value between this pixel and its neighbors
@@ -133,7 +121,23 @@ u8 **perlinToSnakeData(f32 **perlinData, int w, int h) {
 			}
 		}
 	}
+}
 
+u8 **perlinToSnakeData(f32 **perlinData, int w, int h) {
+    float threshold = 0.02f; // Adjust this value to control the sensitivity of the edge detection
+	u8 **snakeData = ft_calloc(h, sizeof(u8*));
+	if (!snakeData) {
+		ft_printf_fd(2, "Error: ft_calloc failed\n");
+		return (NULL);
+	}
+	for (int i = 0; i < h; ++i) {
+		if (!(snakeData[i] = ft_calloc(w, sizeof(u8)))) {
+			ft_printf_fd(2, "Error: ft_calloc failed\n");
+			return (NULL);
+		}
+	}
+	
+	neighborDiffEdgeDetection(perlinData, snakeData, w, h, threshold);
 	morphologicalErosion(snakeData, w, h, BLACK_VAL, WHITE_VAL, 2, 12);
 	morphologicalErosion(snakeData, w, h, WHITE_VAL, BLACK_VAL, 2, 12);
 
