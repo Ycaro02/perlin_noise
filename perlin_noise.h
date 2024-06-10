@@ -135,6 +135,24 @@ void debugTotalUpdate(f32 total, f32 *totalMin, f32 *totalMax);
 f32 **floatDoubleArrayAlloc(int rows, int cols);
 
 
+/* SNAKE define */
+#define PERLIN_WHITE_VAL	0U
+#define PERLIN_BLACK_VAL	1U
+#define ENTRY_EXIT_VAL		2U
+
+#define PATH_VAL			PERLIN_BLACK_VAL
+
+typedef struct {
+    int x, y;
+} PathPoint;
+
+typedef struct {
+    PathPoint 	*points;
+	PathPoint 	entry;
+    int 		length;
+} Path;
+
+
 /**
  * @brief Perlin data to snake cave data
  * @param perlinData The perlin data to convert
