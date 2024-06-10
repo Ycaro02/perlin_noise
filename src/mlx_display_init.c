@@ -77,25 +77,36 @@ static int perlinNoiseDraw(void *data) {
 	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, 0, 0);
 }
 
+#define SNAKE_VAL_WALL 0U
+#define SNAKE_VAL_CAVE 1U
+#define SNAKE_VAL_EXIT 2U
+
 int perlinNoiseSnakeDraw(mlxContext *mlx) {
 
-	u8 **snakeData = perlinToSnakeData(mlx->perlinFloatData, mlx->w, mlx->h);
+	static u8 **snakeData = NULL;
+	
+	if (!snakeData) {
+		snakeData = perlinToSnakeData(mlx->perlinFloatData, mlx->w, mlx->h);
+	}
 
 	// Draw the snake data
 	for (int y = 0; y < mlx->h; ++y) {
 		for (int x = 0; x < mlx->w; ++x) {
-			if (snakeData[y][x] == 1) {
+			if (snakeData[y][x] == SNAKE_VAL_CAVE) {
 				((int *)mlx->dataAdrr)[y * mlx->w + x] = BLACK;
+			} else if (snakeData[y][x] == SNAKE_VAL_EXIT) {
+				// ft_printf_fd(1, "EXIT on %d %d\n\n", y, x);
+				((int *)mlx->dataAdrr)[y * mlx->w + x] = RGB_RED;
 			} else {
 				((int *)mlx->dataAdrr)[y * mlx->w + x] = GRAY;
 			}
 		}
 	}
 	// Free the snake data
-	for (int i = 0; i < mlx->h; ++i) {
-		free(snakeData[i]);
-	}
-	free(snakeData);
+	// for (int i = 0; i < mlx->h; ++i) {
+	// 	free(snakeData[i]);
+	// }
+	// free(snakeData);
 
     mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, 0, 0);
 }

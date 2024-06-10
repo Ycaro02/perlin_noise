@@ -35,7 +35,7 @@ float_test: all
 	./${NAME} 42 4 1.0 2.0 1
 
 snake_test: all 
-	./${NAME} 42 8 0.6 2.0 2
+	./${NAME} 42 6 0.6 2.0 2
 
 clean:
 	rm -f ${NAME}
