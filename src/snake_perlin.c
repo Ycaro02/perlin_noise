@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define PERLIN_WHITE_VAL 0U
-#define PERLIN_BLACK_VAL 1U
-#define ENTRY_EXIT_VAL 2U // La valeur pour marquer les entrées/sorties
+#define PERLIN_WHITE_VAL	0U
+#define PERLIN_BLACK_VAL	1U
+#define ENTRY_EXIT_VAL		2U
 
-#define PATH_VAL PERLIN_BLACK_VAL // La valeur représentant le chemin
+#define PATH_VAL			PERLIN_BLACK_VAL
 
 typedef struct {
     int x, y;
@@ -36,19 +36,19 @@ void markEntryCircle(u8 **snakeData, int w, int h, int x, int y, int size) {
 }
 
 void markPathEntry(u8 **snakeData, Path *paths, int numPaths, int w, int h) {
-    int entryDistThreshold = 30; // Définir le seuil de distance minimum acceptable
+    int entryDistThreshold = 30;
 
     for (int i = 0; i < numPaths; i++) {
         Path 		*path = paths + i;
 		PathPoint 	point = path->points[path->length / 2];
 
-		// Ajuster le point pour éviter les bords
+		// Adjust the point to avoid the edges
 		point.x = point.x < 5 ? 5 : point.x;
 		point.x = point.x > w - 10 ? w - 10 : point.x;
 		point.y = point.y < 5 ? 5 : point.y;
 		point.y = point.y > h - 10 ? h - 10 : point.y;
 
-		// Vérifier la distance avec toutes les entrées précédentes
+		// Check the distance with all previous entries
 		s8 tooClose = FALSE;
 		for (int k = 0; k < numPaths; k++) {
 			int dx = point.x - paths[k].entry.x;
@@ -224,7 +224,6 @@ u8 **perlinToSnakeData(f32 **perlinData, int w, int h) {
 
 	for (int i = 0; i < nbPaths; i++) {
 		free(paths[i].points);
-		// free(paths[i].entries);
 	}
 	free(paths);
 	return (snakeData);
