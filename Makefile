@@ -6,6 +6,7 @@ SRC =	src/main_perlin.c\
 		src/noise_interpolate_utils.c\
 		src/noise_utils.c\
 		src/perlin_noise.c\
+		src/snake_perlin.c\
 
 MLX_FLAG 		=	-Lminilibx-linux -lmlx -lX11 -lXext -lm -fsanitize=address -g
 
@@ -27,11 +28,14 @@ clean_lib:
 	${MAKE_SILENCE} libft fclean
 	${MAKE_SILENCE} minilibx-linux clean
 
-test: all
+basic_test: all
 	./${NAME} 42 8 1.0 2.0
 
-ftest: all
+float_test: all
 	./${NAME} 42 4 1.0 2.0 1
+
+snake_test: all 
+	./${NAME} 42 8 0.6 2.0 2
 
 clean:
 	rm -f ${NAME}

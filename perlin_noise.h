@@ -6,6 +6,9 @@
 #define PERLIN_NOISE_HEIGHT 2048
 #define PERLIN_NOISE_WIDTH 2048
 
+// #define PERLIN_NOISE_HEIGHT 1024
+// #define PERLIN_NOISE_WIDTH 1024
+
 #define PERLIN_ARRAY_SIZE (PERLIN_NOISE_HEIGHT * PERLIN_NOISE_WIDTH)
 
 #include "libft/libft.h"
@@ -130,6 +133,15 @@ void debugTotalUpdate(f32 total, f32 *totalMin, f32 *totalMax);
  * @return f32** The allocated 2D array
 */
 f32 **floatDoubleArrayAlloc(int rows, int cols);
+
+
+/**
+ * @brief Perlin data to snake cave data
+ * @param perlinData The perlin data to convert
+ * @param w,h The width and height of the perlin data
+ * @return u8** The snake cave data
+*/
+u8 **perlinToSnakeData(f32 **perlinData, int w, int h);
 
 f32 normalisef32Tof32(f32 value, f32 start1, f32 stop1, f32 start2, f32 stop2);
 f32 perlinInterpolate(f32 a, f32 b, f32 t);
