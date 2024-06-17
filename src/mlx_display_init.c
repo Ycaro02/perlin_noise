@@ -105,6 +105,23 @@ int perlinNoiseSnakeDraw(mlxContext *mlx) {
     mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, 0, 0);
 }
 
+/* Condition use for continental, humidity and temperature noise*/
+static void base_condition(mlxContext *mlx, f32 val, int x, int y) {
+    if (val >= 0.5f) {
+        ((int *)mlx->dataAdrr)[y * mlx->w + x] = BLACK;
+    } else if (val >= 0.2f) {
+        ((int *)mlx->dataAdrr)[y * mlx->w + x] = VERRY_DARK_GRAY;
+    } else if (val >= 0.0f) {
+        ((int *)mlx->dataAdrr)[y * mlx->w + x] = DARK_GRAY;
+    } else if (val >= -0.2f) {
+        ((int *)mlx->dataAdrr)[y * mlx->w + x] = GRAY;
+    } else if (val >= -0.5f) {
+        ((int *)mlx->dataAdrr)[y * mlx->w + x] = LIGHT_GRAY;
+    } else {
+        ((int *)mlx->dataAdrr)[y * mlx->w + x] = VERRY_LIGHT_GRAY;
+    }
+}
+
 /* @brief Draw Color board */
 static int perlinNoiseColorDraw(void *data)
 {
@@ -113,24 +130,11 @@ static int perlinNoiseColorDraw(void *data)
 	for (int y = 0; y < mlx->h; ++y) {
 		for (int x = 0; x < mlx->w; ++x) {
 			f32 val = mlx->perlinFloatData[y][x];
-			if (val >= 0.5f) {
-				((int *)mlx->dataAdrr)[y * mlx->w + x] = BLACK;
-			} else if (val >= 0.2 && val <= 0.5f) {
-				((int *)mlx->dataAdrr)[y * mlx->w + x] = VERRY_DARK_GRAY;
-			} else if (val >= 0.0 && val <= 0.2f) {
-				((int *)mlx->dataAdrr)[y * mlx->w + x] = DARK_GRAY;
-			} else if (val >= -0.2 && val <= 0.0f) {
-				((int *)mlx->dataAdrr)[y * mlx->w + x] = GRAY;
-			} else if (val >= -0.5 && val <= 0.2f) {
-				((int *)mlx->dataAdrr)[y * mlx->w + x] = LIGHT_GRAY;
-			} else {
-				((int *)mlx->dataAdrr)[y * mlx->w + x] = VERRY_LIGHT_GRAY;
-			}
+			base_condition(mlx, val, x, y);
 		}
 	}
 	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, 0, 0);
 }
-
 
 /* @brief Init display */
 int8_t init_mlx(int width, int height, void *perlinData, u8 colorDisplay) 
@@ -177,6 +181,8 @@ int8_t init_mlx(int width, int height, void *perlinData, u8 colorDisplay)
 	mlx_hook(mlx.win, 2, 1L, key_hooks_press, &mlx);
 	mlx_hook(mlx.win, DestroyNotify, StructureNotifyMask, destroy_windows, &mlx);
 	// mlx_loop_hook(game->mlx, display_board_stdout, game);
+
+	
 	if (colorDisplay == FLOAT_DISPLAY) {
 		mlx_loop_hook(mlx.ptr, perlinNoiseColorDraw, &mlx);
 	} else if (colorDisplay == CAVE_DISPLAY) {

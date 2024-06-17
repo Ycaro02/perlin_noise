@@ -31,11 +31,20 @@ clean_lib:
 basic_test: all
 	./${NAME} 42 8 1.0 2.0
 
+continental_noise: all
+	./${NAME} 42 8 0.6 2.0 1
+
+erosion_noise: all
+	./${NAME} 43 8 0.6 1.8 1
+
 humidity_noise: all
-	./${NAME} 42 4 1.0 2.0 1
+	./${NAME} 44 4 1.0 2.0 1
 
 temperature_noise: all
-	./${NAME} 43 6 0.4 2.0 1
+	./${NAME} 45 6 0.4 2.0 1
+
+peaks_valley_noise: all
+	./${NAME} 46 10 0.5 3.0 1
 
 snake_noise: all 
 	./${NAME} 42 6 0.6 2.0 2
