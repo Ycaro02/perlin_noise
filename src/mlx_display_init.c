@@ -105,7 +105,7 @@ int perlinNoiseSnakeDraw(mlxContext *mlx) {
     mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, 0, 0);
 }
 
-/* Condition use for continental, humidity and temperature noise*/
+/* Condition use for continental, erosion, peaks, humidity and temperature noise*/
 static void base_condition(mlxContext *mlx, f32 val, int x, int y) {
     if (val >= 0.5f) {
         ((int *)mlx->dataAdrr)[y * mlx->w + x] = BLACK;

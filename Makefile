@@ -46,6 +46,9 @@ temperature_noise: all
 peaks_valley_noise: all
 	./${NAME} 46 10 0.5 3.0 1
 
+2peaks_valley_noise: all
+	./${NAME} 46 6 0.6 2.2 1
+
 snake_noise: all 
 	./${NAME} 42 6 0.6 2.0 2
 
