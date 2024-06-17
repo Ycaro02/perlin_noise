@@ -1,4 +1,4 @@
-#include "../perlin_noise.h"
+#include "../../include/perlin_noise.h"
 
 /**
  * @brief Compute the gradient of a noise

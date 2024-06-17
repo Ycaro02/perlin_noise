@@ -1,4 +1,4 @@
-#include "../perlin_noise.h"
+#include "../../include/perlin_noise.h"
 
 void addPointToPath(Path *path, s32 x, s32 y) {
     path->points = realloc(path->points, (path->length + 1) * sizeof(PathPoint));
@@ -29,7 +29,6 @@ void markPathEntry(u8 **snakeData, Path *paths, s32 numPaths, s32 w, s32 h) {
 		if (point.x > w - 10) { point.x = w - 10; }
 		if (point.y < 5) { point.y = 5; }
 		if (point.y > h - 10) { point.y = h - 10; }
-
 
 		// Check the distance with all previous entries
 		s8 tooClose = FALSE;
@@ -129,7 +128,7 @@ Path *buildPaths(u8 **snakeData, s32 w, s32 h, s32 *nbPaths, s32 minLength) {
     }
     free(visited);
     *nbPaths = numPaths;
-    ft_printf_fd(1, RED"Number of totalPath: %d\n"RESET, numPaths);
+    // ft_printf_fd(1, RED"Number of totalPath: %d\n"RESET, numPaths);
 	return (totalPath);
 }
 

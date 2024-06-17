@@ -1,4 +1,4 @@
-#include "../perlin_noise.h"
+#include "../include/perlin_noise.h"
 #include "../minilibx-linux/mlx.h"
 #include "../minilibx-linux/mlx_int.h"
 
@@ -102,12 +102,6 @@ int perlinNoiseSnakeDraw(mlxContext *mlx) {
 			}
 		}
 	}
-	// Free the snake data
-	// for (int i = 0; i < mlx->h; ++i) {
-	// 	free(snakeData[i]);
-	// }
-	// free(snakeData);
-
     mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, 0, 0);
 }
 

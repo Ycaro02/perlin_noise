@@ -2,11 +2,11 @@ NAME = perlinDisplay
 
 SRC =	src/main_perlin.c\
 		src/mlx_display_init.c\
-		src/noise_image.c\
-		src/noise_interpolate_utils.c\
-		src/noise_utils.c\
-		src/perlin_noise.c\
-		src/snake_perlin.c\
+		src/perlin/noise_image.c\
+		src/perlin/noise_interpolate_utils.c\
+		src/perlin/noise_utils.c\
+		src/perlin/perlin_noise.c\
+		src/perlin/snake_perlin.c\
 
 MLX_FLAG 		=	-Lminilibx-linux -lmlx -lX11 -lXext -lm -fsanitize=address -g
 
@@ -31,10 +31,13 @@ clean_lib:
 basic_test: all
 	./${NAME} 42 8 1.0 2.0
 
-float_test: all
+humidity_noise: all
 	./${NAME} 42 4 1.0 2.0 1
 
-snake_test: all 
+temperature_noise: all
+	./${NAME} 43 6 0.4 2.0 1
+
+snake_noise: all 
 	./${NAME} 42 6 0.6 2.0 2
 
 clean:

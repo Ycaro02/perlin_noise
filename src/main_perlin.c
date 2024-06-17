@@ -1,4 +1,4 @@
-#include "../perlin_noise.h"
+#include "../include/perlin_noise.h"
 
 s8 parseInput(int argc, char **argv, u64 *seed, int *octaves, f32 *persistence, f32 *lacurarity, u8 *colorDisplay) {
 	if (argc < 5 || argc > 6) {

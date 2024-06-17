@@ -1,4 +1,4 @@
-#include "../perlin_noise.h"
+#include "../../include/perlin_noise.h"
 
 u8 *perlinImageInit(int width, int height, int octaves, f32 persistence, f32 lacurarity) {
     vec2_f32 **gradient = gradientNoiseGeneration(width, height);

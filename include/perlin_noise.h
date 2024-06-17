@@ -11,7 +11,7 @@
 
 #define PERLIN_ARRAY_SIZE (PERLIN_NOISE_HEIGHT * PERLIN_NOISE_WIDTH)
 
-#include "libft/libft.h"
+#include "../libft/libft.h"
 
 typedef struct s_perlin_data {
 	s32 z0, x0, z1, x1;
@@ -151,7 +151,6 @@ typedef struct {
 	PathPoint 	entry;
     int 		length;
 } Path;
-
 
 /**
  * @brief Perlin data to snake cave data
