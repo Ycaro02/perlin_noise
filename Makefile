@@ -72,7 +72,6 @@ endif
 
 lib $(PERLIN_LIB): $(LIBFT) $(LIST) $(LIB_OBJS)
 	@printf "$(CYAN)Compiling perlin noise library...$(RESET)\n"
-	@$(MAKE_SILENCE) minilibx-linux
 	@ar rcs $(PERLIN_LIB) $(LIB_OBJS)
 	@printf "$(GREEN)Compiling perlin noise library done -> $(PERLIN_LIB) $(RESET)\n"
 
