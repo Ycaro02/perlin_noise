@@ -75,6 +75,7 @@ static int perlinNoiseDraw(void *data) {
 		}
 	}
 	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, 0, 0);
+	return (0);
 }
 
 #define SNAKE_VAL_WALL 0U
@@ -103,6 +104,7 @@ int perlinNoiseSnakeDraw(mlxContext *mlx) {
 		}
 	}
     mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, 0, 0);
+	return (0);
 }
 
 /* Condition use for continental, erosion, peaks, humidity and temperature noise*/
@@ -134,6 +136,7 @@ static int perlinNoiseColorDraw(void *data)
 		}
 	}
 	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, 0, 0);
+	return (0);
 }
 
 /* @brief Init display */
