@@ -83,6 +83,7 @@ debug:
 
 clean_lib:
 	${MAKE_SILENCE} libft fclean
+	$(MAKE_SILENCE) libft/list fclean
 	${MAKE_SILENCE} minilibx-linux clean
 
 basic_test: all
@@ -115,7 +116,4 @@ clean:
 re : clean all
 
 fclean : clean_lib clean
-	$(MAKE_SILENCE) minilibx-linux clean
-	$(MAKE_SILENCE) libft fclean
-	$(MAKE_SILENCE) libft/list fclean
 	@echo fclean done
