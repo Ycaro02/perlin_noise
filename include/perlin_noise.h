@@ -16,7 +16,6 @@
 typedef struct s_perlin_data {
 	s32 z0, x0, z1, x1;
 	f32 val;
-	f32 add;
 	s32 normalise;
 	s32 givenX, givenZ;
 } PerlinData;
