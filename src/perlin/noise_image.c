@@ -49,7 +49,8 @@ u8 *perlinImageGet(unsigned int seed, int width, int height, int octaves, f32 pe
     return (perlinMap);
 }
 
-u8 *perlinImageGetWithoutSeed(int width, int height, int octaves, f32 persistence, f32 lacurarity) {
+
+u8 *perlinImageNoSeedGet(int width, int height, int octaves, f32 persistence, f32 lacurarity) {
     u8 *perlinMap = NULL;
 
     perlinMap = perlinImageInit(width, height, octaves, persistence, lacurarity);
