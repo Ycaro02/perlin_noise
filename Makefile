@@ -126,4 +126,3 @@ clean:
 re : clean all
 
 fclean : clean_lib clean
-	@echo fclean done
