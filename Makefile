@@ -28,6 +28,16 @@ LIBFT			= 	libft/libft.a
 
 LIST			= 	libft/list/linked_list.a
 
+MAIN_LIBFT		=	../../libft/libft.a
+
+MAIN_LIST		=	../../libft/list/linked_list.a
+
+
+ifeq ($(shell [ -f ${MAIN_LIBFT} ] && echo 0 || echo 1), 0)
+LIBFT		=	../../libft/libft.a
+LIST		=	../../libft/list/linked_list.a
+endif
+
 PERLIN_LIB		= 	perlin_noise.a
 
 MLX_LIB 		= 	minilibx-linux/libmlx.a
@@ -72,6 +82,7 @@ endif
 
 lib $(PERLIN_LIB): $(LIBFT) $(LIST) $(LIB_OBJS)
 	@printf "$(CYAN)Compiling perlin noise library...$(RESET)\n"
+	@printf "$(YELLOW)Libft path: $(LIBFT) $(RESET)\n"
 	@ar rcs $(PERLIN_LIB) $(LIB_OBJS)
 	@printf "$(GREEN)Compiling perlin noise library done -> $(PERLIN_LIB) $(RESET)\n"
 
