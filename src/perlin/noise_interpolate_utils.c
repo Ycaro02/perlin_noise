@@ -44,13 +44,14 @@ f32 getInterpolatedPerlinNoise(f32 **perlinNoise, f32 x, f32 z, f32 scale, s32 w
 
     return (bilinearInterpolation(q11, q12, q21, q22, tx, tz));
 }
+
 /* Interpolate noise value */
-f32 normaliseNoiseGet(f32 **perlinNoise, s32 x, s32 z, PerlinData *perlinVal) {
+f32 interpolateNoiseGet(f32 **perlinNoise, s32 x, s32 z, PerlinData *perlinVal) {
 	/* set Perlin Debug val here */
 	perlinVal->givenX = x;
 	perlinVal->givenZ = z;
 
-	return (getInterpolatedPerlinNoise(perlinNoise, x, z, 4.0f, PERLIN_NOISE_WIDTH, PERLIN_NOISE_HEIGHT, perlinVal));
+	return (getInterpolatedPerlinNoise(perlinNoise, x, z, 8.0f, PERLIN_NOISE_WIDTH, PERLIN_NOISE_HEIGHT, perlinVal));
 }
 
 f32 normalizeU8Tof32(u8 value, u8 start1, u8 stop1, f32 start2, f32 stop2) {
