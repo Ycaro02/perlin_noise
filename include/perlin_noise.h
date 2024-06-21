@@ -19,6 +19,8 @@ typedef struct s_perlin_data {
 	f32 valErosion;
 	f32 valPeaksValley;
 	f32 valCombined;
+	f32 valHumidity;
+	f32 valTemperature;
 	s32 normalise;
 	s32 givenX, givenZ;
 } PerlinData;
