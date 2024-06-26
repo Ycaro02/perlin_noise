@@ -14,7 +14,7 @@ f32 bilinearInterpolation(f32 q11, f32 q12, f32 q21, f32 q22, f32 x, f32 z) {
     return (perlinInterpolate(r1, r2, z));
 }
 
-f32 getInterpolatedPerlinNoise(f32 **perlinNoise, f32 x, f32 z, f32 scale, s32 width, s32 height) {
+f32 getInterpolatedPerlinNoise(f32 **perlinNoise, f32 x, f32 z, f32 scale, s32 width, s32 height,PerlinData *perlinVal) {
     f32 scaledX = (fabs(x) / scale);
     f32 scaledZ = (fabs(z) / scale);
 
@@ -25,24 +25,23 @@ f32 getInterpolatedPerlinNoise(f32 **perlinNoise, f32 x, f32 z, f32 scale, s32 w
 
 
 	/* set Perlin Debug val here */
-	// perlinVal->x0 = x0 % width;
-	// perlinVal->z0 = z0 % height;
-	// perlinVal->x1 = x1 % width;
-	// perlinVal->z1 = z1 % height;
-    // f32 q11 = perlinNoise[perlinVal->x0][perlinVal->z0];
-    // f32 q12 = perlinNoise[perlinVal->x0][perlinVal->z1];
-    // f32 q21 = perlinNoise[perlinVal->x1][perlinVal->z0];
-    // f32 q22 = perlinNoise[perlinVal->x1][perlinVal->z1];
+	perlinVal->x0 = x0 % width;
+	perlinVal->z0 = z0 % height;
+	perlinVal->x1 = x1 % width;
+	perlinVal->z1 = z1 % height;
+    f32 q11 = perlinNoise[perlinVal->x0][perlinVal->z0];
+    f32 q12 = perlinNoise[perlinVal->x0][perlinVal->z1];
+    f32 q21 = perlinNoise[perlinVal->x1][perlinVal->z0];
+    f32 q22 = perlinNoise[perlinVal->x1][perlinVal->z1];
 
-	x0 = x0 % width;
-	z0 = z0 % height;
-	x1 = x1 % width;
-	z1 = z1 % height;
-
-	f32 q11 = perlinNoise[x0][z0];
-	f32 q12 = perlinNoise[x0][z1];
-	f32 q21 = perlinNoise[x1][z0];
-	f32 q22 = perlinNoise[x1][z1];
+	// x0 = x0 % width;
+	// z0 = z0 % height;
+	// x1 = x1 % width;
+	// z1 = z1 % height;
+	// f32 q11 = perlinNoise[x0][z0];
+	// f32 q12 = perlinNoise[x0][z1];
+	// f32 q21 = perlinNoise[x1][z0];
+	// f32 q22 = perlinNoise[x1][z1];
 
 
     f32 tx = scaledX - x0;
@@ -52,12 +51,12 @@ f32 getInterpolatedPerlinNoise(f32 **perlinNoise, f32 x, f32 z, f32 scale, s32 w
 }
 
 /* Interpolate noise value */
-f32 interpolateNoiseGet(f32 **perlinNoise, s32 x, s32 z, f32 scaleFactor, s32 width, s32 height) {
+f32 interpolateNoiseGet(f32 **perlinNoise, s32 x, s32 z, f32 scaleFactor, s32 width, s32 height, PerlinData *perlinVal) {
 	/* set Perlin Debug val here */
-	// perlinVal->givenX = x;
-	// perlinVal->givenZ = z;
+	perlinVal->givenX = x;
+	perlinVal->givenZ = z;
 
-	return (getInterpolatedPerlinNoise(perlinNoise, x, z, scaleFactor, width, height));
+	return (getInterpolatedPerlinNoise(perlinNoise, x, z, scaleFactor, width, height, perlinVal));
 }
 
 f32 normalizeU8Tof32(u8 value, u8 start1, u8 stop1, f32 start2, f32 stop2) {
