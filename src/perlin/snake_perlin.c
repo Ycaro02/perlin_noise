@@ -44,7 +44,7 @@ void markPathEntry(u8 **snakeData, Path *paths, s32 numPaths, s32 w, s32 h) {
 		}
 
 		if (!tooClose) {
-			markEntryCircle(snakeData, point.x, point.y, 4);
+			markEntryCircle(snakeData, point.x, point.y, 2);
 			path->entry = point;
 		}
     }
